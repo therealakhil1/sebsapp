@@ -34,162 +34,161 @@ class registerState extends State<register> {
         backgroundColor: Colors.black45,
       ),
       body:Center(
-        child:Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:[
-            Padding(
-              padding: const EdgeInsets.only(top:10.0,left:32.0,bottom: 10.0),
-              child: Form(
-                key: _formKey,
+        child:Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children:[
+              Padding(
+                padding: const EdgeInsets.only(top:10.0,left:32.0,bottom: 10.0),
+                child: Row(
+                   children: [
+                     Container(
+                         width: 350,
+                       child: TextFormField(
+                          decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText:'Your email id goes here'
+                       ),
+                         controller: _email,
+                         validator: (val) =>val!.isEmpty ? ' Enter an email' : null
+                     )
+                     )
+                   ],
+                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top:10.0,left:32.0,bottom: 10.0),
+                child: Row(
+                  children: [
+                    Container(
+                        width: 350,
+                      child: TextFormField(
+                          decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText:'Your password goes here'
+                      ),
+                        controller: _password,
+                          obscureText: true,
+                          validator: (val) => val!.isEmpty ? 'Enter a password 6+ characters long' : null
+                    )
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top:10.0,left:32.0,bottom: 10.0),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 350,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText:'Confirm password',
+                        ),
+                          controller: _confirmpassword,
+                          obscureText: true,
+                          validator: (val) => val!.length < 6 ? 'Enter a password 6+ characters long' : null
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top:10.0,left:165.0,bottom: 10.0),
+                child: Row(
+                  children: [
+                    Container(
+                      child:DropdownButton<String>(
+                        value: dropdownValue,
+                       onChanged: (String? newValue){
+                          setState(() {
+                            dropdownValue=newValue!;
+                          });
+                       },
+                        items: <String>['Teacher', 'Admin'].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }
+
+                        ).toList(),
+                      )
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top:10.0,left:170.0,bottom: 10.0),
                 child: Row(
                  children: [
+                   dropdownValue=="Teacher"?Container(
+                     child:ElevatedButton(
+                       style: ElevatedButton.styleFrom(
+                         shape: CircleBorder(),
+                         padding: EdgeInsets.all(10.0)
+                       ),
+                       child: Icon(
+                         Icons.arrow_forward_ios
+                       ),
+                       onPressed: ()async{
+                         if(_formKey.currentState!.validate()) {
+                                 bool passwordMatch = await _auth.confirm(
+                                     _password.text, _confirmpassword.text);
+                                 if (passwordMatch == true) {
+                                   dynamic shouldNavigate = await _auth.registers(
+                                       _email.text, _password.text,dropdownValue);
+                                   if (shouldNavigate != null) {
+                                     Navigator.push(
+                                         context, MaterialPageRoute(
+                                         builder: (context) => registersteacher()
+                                       )
+                                     );
+                                     print("Register successful teacher");
+                                   }
+                                 }
+                               }
+
+
+
+                       },
+                     )
+
+
+                   ):
                    Container(
-                       width: 350,
-                     child: TextFormField(
-                        decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText:'Your email id goes here'
-                     ),
-                       controller: _email,
-                       validator: (val) =>val!.isEmpty ? ' Enter an email' : null
-                   )
+                       child:ElevatedButton(
+                         style: ElevatedButton.styleFrom(
+                             shape: CircleBorder(),
+                             padding: EdgeInsets.all(10.0)
+                         ),
+                         child: Icon(
+                             Icons.arrow_forward_ios
+                         ),
+                         onPressed: ()async{
+                           bool passwordMatch= await _auth.confirm(_password.text,_confirmpassword.text);
+                           if(passwordMatch==true){
+                             dynamic shouldNavigate=  await _auth.registers(_email.text,_password.text,dropdownValue);
+                             if(shouldNavigate!=null){
+                               Navigator.push(
+                                   context,MaterialPageRoute(builder: (context) => registersadmin())
+                               );
+                             }
+                           }
+                           else{
+                             child:Text("Passwords dont match try again");
+                           }
+                           print("Register successful admin");
+                         },//onPressed
+                       )
                    )
                  ],
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top:10.0,left:32.0,bottom: 10.0),
-              child: Row(
-                children: [
-                  Container(
-                      width: 350,
-                    child: TextFormField(
-                        decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText:'Your password goes here'
-                    ),
-                      controller: _password,
-                        obscureText: true,
-                        validator: (val) => val!.isEmpty ? 'Enter a password 6+ characters long' : null
-                  )
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top:10.0,left:32.0,bottom: 10.0),
-              child: Row(
-                children: [
-                  Container(
-                    width: 350,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText:'Confirm password',
-                      ),
-                        controller: _confirmpassword,
-                        obscureText: true,
-                        validator: (val) => val!.length < 6 ? 'Enter a password 6+ characters long' : null
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top:10.0,left:165.0,bottom: 10.0),
-              child: Row(
-                children: [
-                  Container(
-                    child:DropdownButton<String>(
-                      value: dropdownValue,
-                     onChanged: (String? newValue){
-                        setState(() {
-                          dropdownValue=newValue!;
-                        });
-                     },
-                      items: <String>['Teacher', 'Admin'].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }
-
-                      ).toList(),
-                    )
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top:10.0,left:170.0,bottom: 10.0),
-              child: Row(
-               children: [
-                 dropdownValue=="Teacher"?Container(
-                   child:ElevatedButton(
-                     style: ElevatedButton.styleFrom(
-                       shape: CircleBorder(),
-                       padding: EdgeInsets.all(10.0)
-                     ),
-                     child: Icon(
-                       Icons.arrow_forward_ios
-                     ),
-                     onPressed: ()async{
-
-
-                             if(_formKey.currentState!.validate()) {
-                               bool passwordMatch = await _auth.confirm(
-                                   _password.text, _confirmpassword.text);
-                               if (passwordMatch == true) {
-                                 bool shouldNavigate = await _auth.registers(
-                                     _email.text, _password.text);
-                                 if (shouldNavigate == true) {
-                                   Navigator.push(
-                                       context, MaterialPageRoute(
-                                       builder: (context) => registersteacher())
-                                   );
-                                   print("Register successful teacher");
-                                 }
-                               }
-                             }
-
-
-
-                     },
-                   )
-
-
-                 ):
-                 Container(
-                     child:ElevatedButton(
-                       style: ElevatedButton.styleFrom(
-                           shape: CircleBorder(),
-                           padding: EdgeInsets.all(10.0)
-                       ),
-                       child: Icon(
-                           Icons.arrow_forward_ios
-                       ),
-                       onPressed: ()async{
-                         bool passwordMatch= await _auth.confirm(_password.text,_confirmpassword.text);
-                         if(passwordMatch==true){
-                           bool shouldNavigate=  await _auth.registers(_email.text,_password.text);
-                           if(shouldNavigate==true){
-                             Navigator.push(
-                                 context,MaterialPageRoute(builder: (context) => registersadmin())
-                             );
-                           }
-                         }
-                         else{
-                           child:Text("Passwords dont match try again");
-                         }
-                         print("Register successful admin");
-                       },//onPressed
-                     )
-                 )
-               ],
-              ),
-            )
-          ]
+              )
+            ]
+          ),
         )
       )
     );
