@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'database.dart';
 import 'package:flutter_app/attendancelistbuilder.dart';
+import 'package:flutter_app/profile.dart';
 class attendance extends StatefulWidget {
   @override
   attendanceState createState() => new attendanceState();
@@ -27,9 +28,9 @@ class attendanceState extends State<attendance> {
             ),
 
             onPressed:(){
-              // Navigator.push(
-              //   context,MaterialPageRoute(builder: (context) => login()),//techerprofileupdate()
-              // );
+              Navigator.push(
+                context,MaterialPageRoute(builder: (context) => profile()),//techerprofileupdate()
+              );
               print("logis");
             },
           )
@@ -37,31 +38,11 @@ class attendanceState extends State<attendance> {
       backgroundColor: Colors.black45,
     ),
       body: Center(
-          // child:FutureBuilder(
-          //     future: db.getRole(),
-          //     builder: (context,snapshot){
-          //       if(snapshot.connectionState==ConnectionState.done){
-          //         if(snapshot.hasData){
-          //           dynamic vari=snapshot.data;
-          //           if(vari["role"]=='teacher')
-          //           {
-          //             return teacherpage();
-          //           }
-          //           else{
-          //             return login();//adminhomepage()
-          //           }
-          //         }
-          //
-          //       }
-          //       return HomePage();
-          //     }
-          // )
         child: ElevatedButton(
-          child: Text("build list"),
+          child: Text("Take attendance"),
           onPressed: (){
-            //db.haha();
             Navigator.push(
-              context,MaterialPageRoute(builder: (context) => attendancelistbuilder()),//decide the destination file name later
+              context,MaterialPageRoute(builder: (context) => attendancelistbuilder()),
             );
             //attendancelistbuilder
             print("kjhgfdsa");

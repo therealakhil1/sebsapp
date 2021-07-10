@@ -9,6 +9,7 @@ class DatabaseService{
   final CollectionReference users = FirebaseFirestore.instance.collection('users');
   final CollectionReference attendance=FirebaseFirestore.instance.collection('attendance');
   final CollectionReference student=FirebaseFirestore.instance.collection('student');
+  final CollectionReference alumini=FirebaseFirestore.instance.collection('alumini');
   final FirebaseAuth _auth=FirebaseAuth.instance;
   //DatabaseService({required this.uid});
   //to update data(also on new user registration)
@@ -29,7 +30,7 @@ class DatabaseService{
     final String uid=FirebaseAuth.instance.currentUser!.uid;
     return users.doc(uid).get();
   }
-  Future takeAttendance(int uniqueid,bool present) async{
+  Future takeAttendance(String uniqueid,bool present) async{
     String date=dateformatted();
     print(date);
     return attendance.doc().set(
@@ -53,6 +54,14 @@ class DatabaseService{
         }
     );
   }
+  Future createAluminiprofile(String name,String financialaidrequired) async {
+    return alumini.doc(name).set(
+        {
+          "name": name,
+          "financialaidrequired": financialaidrequired
+        }
+    );
+  }
   // Future displayStudentprofile(String uniqueid) async{
   //    String name="";
   //    String village="";
@@ -70,26 +79,28 @@ class DatabaseService{
   //   }
   //   );
   // }
-  Future profileData() async{
+    Future profileData() async{
     final String uid=FirebaseAuth.instance.currentUser!.uid;
     return users.doc(uid).get();
   }
   Future generateStudentList() async{
-    // student.get().then((QuerySnapshot querySnapshot){
-    //   querySnapshot.docs.forEach((doc){
-    //     //get name of every student
-    //   });
-    // });
     dynamic results;
     await student.get().then((QuerySnapshot querySnapshot) {
-      //print(querySnapshot.docs);
       results=querySnapshot.docs;
-        //return querySnapshot.docs;
     });
     return results;
-    //return FirebaseFirestore.instance.collection('student').get();
-    //return student.get().then((value) => return value.docs);
-    //return student.get();
+  }
+  Future showAttendance(dynamic daet) async{
+    dynamic results;
+    // await attendance.get().then((QuerySnapshot querySnapshot) {
+    //   results=querySnapshot.docs;
+    // });
+    print("yeetus");
+    print(daet);
+    await attendance.where("date",isEqualTo: daet).orderBy("uniqueid").get().then((QuerySnapshot querySnapshot) {
+      results=querySnapshot.docs;
+    });
+    return results;
   }
   String dateformatted(){
     String date=DateTime.now().toString();

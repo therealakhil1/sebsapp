@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,9 +8,10 @@ class attendancelistbuilder extends StatefulWidget {
 
 class attendancelistbuilderState extends State<attendancelistbuilder> {
   final db=DatabaseService();
-  bool isChecked=false;
+  dynamic isChecked;
   dynamic vari="";
   dynamic yeet;
+  dynamic variant;
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -22,63 +21,36 @@ class attendancelistbuilderState extends State<attendancelistbuilder> {
             FutureBuilder(
               future: db.generateStudentList(),
               builder:(context,snapshot){
-                // if(snapshot.connectionState==ConnectionState.done){
-                //             //   print("sheeesh");
-                //             // }
-                //print(snapshot.data);
                 if(snapshot.connectionState==ConnectionState.done){
                   if(snapshot.hasData){
                     print("data yes");
-                    dynamic variant=snapshot.data;
-                    //print(variant.length);
-                    //dynamic doc=variant.map((data)=>_buildListItem(context,data)).toList();
-
-                    //print(doc);
-                    // return Column(
-                    //   children: [
-                    //     Row(
-                    //       children: [
-                    //         //Text(snapshot.data as String),
-                    //         Checkbox(value: isChecked, onChanged: (bool? value){
-                    //           setState(() {
-                    //             isChecked=value!;
-                    //           });
-                    //         })
-                    //       ],
-                    //     ),
-                    //     ElevatedButton(onPressed: (){
-                    //       db.takeAttendance(snapshot.data as int, isChecked);
-                    //     },
-                    //     child: Text("Take attendance"))
-                    //   ],
-                    // );
+                    variant=snapshot.data;
+                    if(isChecked==null){
+                      isChecked=new List<bool>.filled(variant.length,false, growable:true);
+                    }
                     return ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
                         itemCount: variant.length,
                         itemBuilder: (context,index){
-                          // return ListTile(
-                          //   title: Text('${variant[index]["uniqueid"]}'),
-                          //   //title: Text("hello"),
-                          // );
+                          print(isChecked);
                           return Column(
                             children: [
                               Row(
                                 children: [
-                                  Text('${variant[index]["uniqueid"]}'),
-                                  Checkbox(value: isChecked, onChanged: (bool? value){
+                                  Text('${variant[index]["name"]}'),
+                                  Checkbox(value: isChecked[index], onChanged: (bool? value){
                                     setState(() {
-                                      isChecked=value!;
+                                      isChecked[index]=value!;
+                                      print("value1");
                                     });
+                                    db.takeAttendance(variant[index]["uniqueid"], value!);
                                   })
                                 ],
                               ),
-                              ElevatedButton(onPressed:(){
-                                //db.takeAttendance(uniqueid, isChecked)
-                                print("yesssir");
-                              },
-                                  child: Text("Take attendance"))
                             ],
-
                           );
+                          return Container();//nothing
                         });
                   }
                   else{
@@ -91,12 +63,23 @@ class attendancelistbuilderState extends State<attendancelistbuilder> {
                   return Container();//nothing
                 }
               },
+
             ),
-            // ElevatedButton(onPressed:(){
-            //   //db.takeAttendance(uniqueid, isChecked)
-            //   print("yesssir");
-            // },
-            // child: Text("Take attendance"))
+            ElevatedButton(
+              child:Text("Done") ,
+              onPressed: (){
+                int i=0;
+                for(i=0;i<variant.length;i++){
+                  if(isChecked[i]==false){
+                    db.takeAttendance(variant[i]["uniqueid"], false);
+                  }
+                }
+                Navigator.pop(
+                  //registersteacher for now in the future take it to the page its supposed to go into
+                    context,MaterialPageRoute(builder: (context) => attendancelistbuilder())
+                );
+              },
+            )
           ],
 
         ),

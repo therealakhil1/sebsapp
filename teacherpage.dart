@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/createstudentprofile.dart';
+import 'package:flutter_app/viewaluminiprofile.dart';
 import 'package:flutter_app/viewstudentprofile.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_app/flutterfire.dart';
@@ -8,6 +9,9 @@ import 'package:flutter_app/Carouseldata.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_app/attendance.dart';
 import 'package:flutter_app/profile.dart';
+import 'package:flutter_app/viewattendance.dart';
+
+import 'createaluminiprofile.dart';
 class teacherpage extends StatefulWidget {
   @override
   teacherpageState createState() => new teacherpageState();
@@ -22,7 +26,10 @@ class teacherpageState extends State<teacherpage> {
     List<Carouseldata> carousel=[
       new Carouseldata("Assets/images/attandance.jpg", "ATTENDANCE",attendance()),
       new Carouseldata("Assets/images/student.jpg", "Create student profile",createstudentprofile()),
-      new Carouseldata("Assets/images/student.jpg", "view student profile",viewstudentprofile())
+      new Carouseldata("Assets/images/student.jpg", "view student profile",viewstudentprofile()),
+      new Carouseldata("Assets/images/aluminiprofile.jpg", "create alumini profile",createaluminiprofile()),
+      new Carouseldata("Assets/images/attandance.jpg", "view alumini profile",viewaluminiprofile()), //change image
+      new Carouseldata("Assets/images/attandance.jpg", "view attendace",viewattendance()),//change image
     ];
     return Scaffold(
       appBar: AppBar(
