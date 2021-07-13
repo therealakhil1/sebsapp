@@ -5,6 +5,8 @@ import 'package:flutter_app/register.dart';
 import 'package:flutter_app/teacherpage.dart';
 import 'package:flutter_app/flutterfire.dart';
 import 'package:flutter_app/registersteacher.dart';
+
+import 'authwrapper.dart';
 class login extends StatefulWidget {
   @override
   loginState createState() => new loginState();
@@ -37,19 +39,6 @@ class loginState extends State<login> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(onPressed:(){
-                    Navigator.push(
-                      context,MaterialPageRoute(builder: (context) => register())
-                    );
-                    print("Registered");
-                  },
-                    child: Text("Register")
-                  )
-                ],
-              ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
@@ -121,10 +110,9 @@ class loginState extends State<login> {
                         if(_formKey.currentState!.validate()){
                           dynamic signin = await _auth.signin(_email.text,_password.text);
                           if(signin!=null){
-                            //this.login();
+                            this.login();
                             Navigator.push(
-                              //registersteacher for now in the future take it to the page its supposed to go into
-                                context,MaterialPageRoute(builder: (context) => teacherpage())
+                                context,MaterialPageRoute(builder: (context) => authwrapper())
                             );
                           }
                           else{

@@ -103,101 +103,11 @@ class teacherpageState extends State<teacherpage> {
                                     }
                                 )
                             );
-                            // return GestureDetector(
-                            //   child: Padding(
-                            //     padding: const EdgeInsets.all(20.0),
-                            //     child: Container(
-                            //       width: 300.0,
-                            //       alignment: Alignment.center,
-                            //       decoration: BoxDecoration(
-                            //         borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                            //         // image: DecorationImage(
-                            //         //   image: AssetImage("${_images[index]}"),
-                            //         //   fit: BoxFit.cover,
-                            //         // ),
-                            //       ),
-                            //       child: Text(
-                            //           "${_text[index]}",
-                            //           style:GoogleFonts.tenaliRamakrishna(
-                            //               color: Colors.white,
-                            //               fontSize: 35
-                            //           )
-                            //       ),
-                            //     ),
-                            //   ),
-                            //   onTap:(){
-                            //     // Navigator.push(
-                            //     //   context,MaterialPageRoute(builder: (context) => login()),//decide the destination file name later
-                            //     // );
-                            //     print("test");
-                            //   },
-                            // );
                           },
                         );
                       }).toList(),
                     ),
                   ),
-                  // TinderSwapCard(
-                  //   allowVerticalMovement: false,
-                  //   //total number of card 5 for testing purposes only
-                  //   totalNum: _images.length,
-                  //   stackNum: 3,
-                  //   maxHeight: screenHeight*0.7,
-                  //   maxWidth: screenWidth*0.9,
-                  //   minHeight: screenHeight*0.65,
-                  //   minWidth: screenWidth*0.8,
-                  //   cardBuilder: (context,index){
-                  //     return Card(
-                  //       child: Column(
-                  //         children: [
-                  //           Container(
-                  //             margin: EdgeInsets.all(10.0),
-                  //
-                  //             child: GestureDetector(
-                  //               // child: Container(
-                  //               //   decoration: BoxDecoration(
-                  //               //     image: DecorationImage(
-                  //               //
-                  //               //       image: AssetImage("Assets/images/Schools_background_1.jpg"),
-                  //               //       fit:BoxFit.cover
-                  //               //     )
-                  //               //   ),
-                  //               // ),
-                  //               child: Container(
-                  //                 height:230.0,
-                  //                 width: 300.0,
-                  //                 alignment: Alignment.center,
-                  //                 decoration: BoxDecoration(
-                  //                   //borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                  //                   image: DecorationImage(
-                  //                     //insert actual image later on
-                  //                     image: AssetImage('Assets/images/${_images[index]}'),
-                  //                     fit: BoxFit.cover,
-                  //                   ),
-                  //                 ),
-                  //                 child: Text(
-                  //                     "${_text[index]}",
-                  //                     style:GoogleFonts.tenaliRamakrishna(
-                  //                         color: Colors.white,
-                  //                         fontSize: 35
-                  //                     )
-                  //                 ),
-                  //               ),
-                  //               onTap:(){
-                  //                 // Navigator.push(
-                  //                 //   context,MaterialPageRoute(builder: (context) => attendance()),//decide the destination file name later
-                  //                 // );
-                  //                 print("attendance");
-                  //               },
-                  //             ),
-                  //
-                  //             ),
-                  //
-                  //         ],
-                  //       ),
-                  //     );
-                  //   },
-                  // ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: ElevatedButton(onPressed:()async{
@@ -208,7 +118,6 @@ class teacherpageState extends State<teacherpage> {
                   )
                 ],
                 //height: screenHeight-200,
-
               ),
             ),
           ]

@@ -5,6 +5,9 @@ import 'package:flutter_app/registersteacher.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_app/flutterfire.dart';
 import 'package:flutter_app/RegisterErrorText.dart';
+import 'package:flutter_app/teacherpage.dart';
+
+import 'adminpage.dart';
 class register extends StatefulWidget {
   @override
   registerState createState() => new registerState();
@@ -113,7 +116,6 @@ class registerState extends State<register> {
                             child: Text(value),
                           );
                         }
-
                         ).toList(),
                       )
                     )
@@ -141,22 +143,20 @@ class registerState extends State<register> {
                                    dynamic shouldNavigate = await _auth.registers(
                                        _email.text, _password.text,dropdownValue);
                                    if (shouldNavigate != null) {
-                                     Navigator.push(
-                                         context, MaterialPageRoute(
-                                         builder: (context) => registersteacher()
-                                       )
+                                     // Navigator.push(
+                                     //     context, MaterialPageRoute(
+                                     //     builder: (context) => teacherpage()
+                                     //   )
+                                     // );
+                                     Navigator.pop(
+                                         context,MaterialPageRoute(builder: (context)=> register())
                                      );
                                      print("Register successful teacher");
                                    }
                                  }
                                }
-
-
-
-                       },
+                         },
                      )
-
-
                    ):
                    Container(
                        child:ElevatedButton(
@@ -172,8 +172,11 @@ class registerState extends State<register> {
                            if(passwordMatch==true){
                              dynamic shouldNavigate=  await _auth.registers(_email.text,_password.text,dropdownValue);
                              if(shouldNavigate!=null){
-                               Navigator.push(
-                                   context,MaterialPageRoute(builder: (context) => registersadmin())
+                               // Navigator.push(
+                               //     context,MaterialPageRoute(builder: (context) => adminpage())
+                               // );
+                               Navigator.pop(
+                                 context,MaterialPageRoute(builder: (context)=> register())
                                );
                              }
                            }
