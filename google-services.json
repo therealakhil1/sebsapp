@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "186417118289",
+    "project_id": "sebsapp-9123d",
+    "storage_bucket": "sebsapp-9123d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:186417118289:android:0005b63c2ab375dfa64c70",
+        "android_client_info": {
+          "package_name": "org.app.flutter_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "186417118289-gcs9pe54ubtvclkq442f486j7g1oi8bg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASW5LAIa-lup7u6M3BfDppolG3xjSZyVo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "186417118289-gcs9pe54ubtvclkq442f486j7g1oi8bg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
