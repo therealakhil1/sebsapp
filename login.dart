@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_app/register.dart';
+import 'package:flutter_app/teacherpage.dart';
 import 'package:flutter_app/flutterfire.dart';
 import 'package:flutter_app/registersteacher.dart';
+
+import 'authwrapper.dart';
 class login extends StatefulWidget {
   @override
   loginState createState() => new loginState();
@@ -15,9 +18,11 @@ class loginState extends State<login> {
    //check role in the school and lead them to that page
 
   }
+  final _formKey= GlobalKey<FormState>();
   final Authenticate _auth =Authenticate();
   TextEditingController _email =TextEditingController();
   TextEditingController _password =TextEditingController();
+  String error="";
   @override
   Widget build(BuildContext context){
     return new Scaffold(
@@ -34,19 +39,6 @@ class loginState extends State<login> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(onPressed:(){
-                    Navigator.push(
-                      context,MaterialPageRoute(builder: (context) => register())
-                    );
-                    print("Registered");
-                  },
-                    child: Text("Register")
-                  )
-                ],
-              ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
@@ -62,46 +54,52 @@ class loginState extends State<login> {
                   ]
                 ),
               ),
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      children:[
-                        Container(
-                          //width: MediaQuery.of(context).size.width * 0.6,
-                          width:350,
-                          child:TextField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText:'Email'
-                            ),
-                            controller: _email,
-                          )
-                        )
-                      ]
-                    ),
-                  ),
-
-
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
+              Form(
+                key: _formKey,
+                child: Column(
                   children: [
-                    Container(
-                        width:350,
-                      child:TextField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText:'Password'
-                        ),
-                        controller: _password,
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        children:[
+                          Container(
+                            //width: MediaQuery.of(context).size.width * 0.6,
+                            width:350,
+                            child:TextFormField(
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText:'Email'
+                              ),
+                              controller: _email,
+                                validator: (val) =>val!.isEmpty ? ' Enter an email' : null
+                            )
+                          )
+                        ]
+                      ),
+                    ),
+
+
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    children: [
+                      Container(
+                          width:350,
+                        child:TextFormField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText:'Password'
+                          ),
+                          controller: _password,
+                          obscureText: true,
+                            validator: (val) =>val!.isEmpty ? ' Enter a password' : null
+                        )
                       )
-                    )
-                  ],
+                    ],
+                  ),
+                )
+                  ],//children
                 ),
-              )
-                ],//children
               ),
               Padding(
                 child: SizedBox(
@@ -109,18 +107,26 @@ class loginState extends State<login> {
                   child: Row(
                     children: [
                       ElevatedButton(onPressed:() async{
-                        dynamic signin = await _auth.signin(_email.text,_password.text);
-                        if(signin!=null){
-                          //this.login();
-                          Navigator.push(
-                            //registersteacher for now in the future take it to the page its supposed to go into
-                              context,MaterialPageRoute(builder: (context) => registersteacher())
-                          );
-                        }
-                      },
-
-
+                        if(_formKey.currentState!.validate()){
+                          dynamic signin = await _auth.signin(_email.text,_password.text);
+                          if(signin!=null){
+                            this.login();
+                            Navigator.push(
+                                context,MaterialPageRoute(builder: (context) => authwrapper())
+                            );
+                          }
+                          else{
+                            setState((){
+                              error="Incorrect username or password";
+                            });
+                          }
+                        }//validation
+                        },//async method
                           child: Text("Login")
+                      ),
+                      Text(
+                          error,
+                        style: TextStyle(color: Colors.red,fontSize: 15),
                       )
                     ],
                   ),

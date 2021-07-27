@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_app/database.dart';
 class Authenticate{
   final FirebaseAuth _auth=FirebaseAuth.instance;
   Future<bool> confirm(String password, String confirmPassword) async{
@@ -12,10 +13,12 @@ class Authenticate{
     }
   }
 
-  Future registers<bool>(String email, String password) async{
+  Future registers<bool>(String email, String password,String dropdownvalue) async{
     try{
-      await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      return true;
+      UserCredential result=await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      User uyser = result.user!;
+      await DatabaseService().updateUserData(dropdownvalue, "david", "football", "0", "dubai", "B.TECH");
+      return User;
     }on FirebaseAuthException catch(e){
       if(e.code=='weak-password'){
         print('password is too weak');
@@ -23,11 +26,11 @@ class Authenticate{
       else if(e.code=='email-already-in-use'){
         print('An account already exists for this email');
       }
-      return false;
+      return null;
     }
     catch(e){
       print(e.toString());
-      return false;
+      return null;
     }
   }
   Future signin<bool>(String email, String password) async{

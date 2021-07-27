@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_app/login.dart';
+import 'package:flutter_app/register.dart';
 class HomePage extends StatefulWidget {
   @override
   HomePageState createState() => new HomePageState();
@@ -43,6 +44,14 @@ class HomePageState extends State<HomePage>{
           //backgroundColor: Colors.black45,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            TextButton(
+              child:Text("register"),
+              onPressed: (){
+                Navigator.push(
+                  context,MaterialPageRoute(builder: (context) => register()),//decide the destination file name later
+                );
+              },
+            ),
             GestureDetector(
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
